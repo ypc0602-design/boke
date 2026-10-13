@@ -11,48 +11,148 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
+		<style>
+			/* 渐变标题 */
+			.gradient-text {
+				background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+				font-size: 3rem;
+				font-weight: bold;
+			}
+
+			/* 正文统一样式 */
+			main {
+				max-width: 720px;
+				margin: 0 auto;
+				padding: 2rem 1.5rem 4rem;
+				color: #1a1a1a;
+				line-height: 1.8;
+			}
+
+			main p {
+				margin-bottom: 1rem;
+				font-size: 1.05rem;
+			}
+
+			/* 分区标题 */
+			.section-title {
+				font-size: 1.5rem;
+				font-weight: 600;
+				margin-top: 2.5rem;
+				margin-bottom: 1rem;
+				color: #222;
+			}
+
+			/* 卡片容器 */
+			.card-list {
+				display: grid;
+				gap: 1rem;
+			}
+
+			.card {
+				border: 1px solid #e5e5e5;
+				border-radius: 8px;
+				padding: 1rem 1.2rem;
+				transition: box-shadow 0.2s;
+			}
+
+			.card:hover {
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+			}
+
+			.card h3 {
+				font-size: 1.1rem;
+				margin: 0 0 0.3rem;
+			}
+
+			.card p {
+				font-size: 0.95rem;
+				color: #555;
+				margin: 0;
+			}
+
+			/* 技术栈标签 */
+			.tech-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+
+			.tech-tag {
+				background: #f3f3f3;
+				border-radius: 4px;
+				padding: 0.3rem 0.8rem;
+				font-size: 0.9rem;
+				color: #333;
+			}
+
+			/* 邮箱链接 */
+			a {
+				color: #4ecdc4;
+				text-decoration: none;
+			}
+
+			a:hover {
+				text-decoration: underline;
+			}
+
+			/* 欢迎语区域 */
+			.hero {
+				margin-bottom: 2rem;
+			}
+
+			.hero p {
+				color: #444;
+			}
+		</style>
+
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to
-				build a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your{' '}
-				<code>astro.config.mjs</code> file. You can customize your setup with{' '}
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like
-				Tailwind, React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>
-					Edit this page in <code>src/pages/index.astro</code>
-				</li>
-				<li>
-					Edit the site header items in <code>src/components/Header.astro</code>
-				</li>
-				<li>
-					Add your name to the footer in <code>src/components/Footer.astro</code>
-				</li>
-				<li>
-					Check out the included blog posts in <code>src/content/blog/</code>
-				</li>
-				<li>
-					Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code>
-				</li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to{' '}
-				<a href="https://docs.astro.build/">read the docs</a> or{' '}
-				<a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out{' '}
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a> by{' '}
-				<a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<!-- 欢迎区 -->
+			<div class="hero">
+				<h1 class="gradient-text">你好，我是 v</h1>
+				<p>欢迎来到我的个人博客。这里记录我的学习笔记、技术思考与日常折腾。</p>
+				<p>联系邮箱：<a href="mailto:1305824605@qq.com">1305824605@qq.com</a></p>
+			</div>
+
+			<!-- 技术栈 -->
+			<h2 class="section-title">技术栈</h2>
+			<div class="tech-tags">
+				<!-- 在这里自行添加技术标签 -->
+				<span class="tech-tag">技术栈 1</span>
+				<span class="tech-tag">技术栈 2</span>
+				<span class="tech-tag">技术栈 3</span>
+			</div>
+
+			<!-- 项目 / 作品 -->
+			<h2 class="section-title">项目 / 作品</h2>
+			<div class="card-list">
+				<!-- 复制下面的 .card 块来添加更多项目 -->
+				<div class="card">
+					<h3>项目名称</h3>
+					<p>项目简介，一句话描述这个项目做了什么。</p>
+				</div>
+				<div class="card">
+					<h3>项目名称</h3>
+					<p>项目简介，一句话描述这个项目做了什么。</p>
+				</div>
+			</div>
+
+			<!-- 最新文章 -->
+			<h2 class="section-title">最新文章</h2>
+			<div class="card-list">
+				<!-- 后续可从 src/content/blog/ 动态渲染文章列表 -->
+				<div class="card">
+					<h3>文章标题</h3>
+					<p>文章摘要或简短描述……</p>
+				</div>
+				<div class="card">
+					<h3>文章标题</h3>
+					<p>文章摘要或简短描述……</p>
+				</div>
+			</div>
 		</main>
 		<Footer />
 	</body>
