@@ -1,8 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
 ---
 
 <!doctype html>
@@ -86,6 +91,19 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				padding: 0.3rem 0.8rem;
 				font-size: 0.9rem;
 				color: #333;
+				cursor: pointer;
+			}
+
+			.tech-tag:hover {
+				background: #e0e0e0;
+			}
+
+			.tech-tags a {
+				text-decoration: none;
+			}
+
+			.tech-tags a:hover {
+				text-decoration: none;
 			}
 
 			/* 邮箱链接 */
@@ -120,38 +138,33 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<!-- 技术栈 -->
 			<h2 class="section-title">技术栈</h2>
 			<div class="tech-tags">
-				<!-- 在这里自行添加技术标签 -->
-				<a href="./technology/linux"><span class="tech-tag">linux主机运维</span></a>
-				<span class="tech-tag">技术栈 2</span>
-				<span class="tech-tag">技术栈 3</span>
+				<a href="/technology/#linux"><span class="tech-tag">Linux 运维</span></a>
+				<a href="/technology/#prometheus"><span class="tech-tag">Prometheus+Grafana</span></a>
+				<a href="/technology/#python"><span class="tech-tag">Python</span></a>
+				<a href="/technology/#ai"><span class="tech-tag">AI 工具/大模型</span></a>
+				<a href="/technology/#security"><span class="tech-tag">网络安全 (OWASP)</span></a>
 			</div>
 
 			<!-- 项目 / 作品 -->
 			<h2 class="section-title">项目 / 作品</h2>
 			<div class="card-list">
-				<!-- 复制下面的 .card 块来添加更多项目 -->
 				<div class="card">
-					<h3>项目名称</h3>
-					<p>项目简介，一句话描述这个项目做了什么。</p>
-				</div>
-				<div class="card">
-					<h3>项目名称</h3>
-					<p>项目简介，一句话描述这个项目做了什么。</p>
+					<h3>项目整理中</h3>
+					<p>后续在这里补充实际项目，例如监控告警搭建、脚本自动化等。</p>
 				</div>
 			</div>
 
 			<!-- 最新文章 -->
 			<h2 class="section-title">最新文章</h2>
 			<div class="card-list">
-				<!-- 后续可从 src/content/blog/ 动态渲染文章列表 -->
-				<div class="card">
-					<h3>文章标题</h3>
-					<p>文章摘要或简短描述……</p>
-				</div>
-				<div class="card">
-					<h3>文章标题</h3>
-					<p>文章摘要或简短描述……</p>
-				</div>
+				{posts.map((post) => (
+					<div class="card">
+						<a href={`/blog/${post.id}/`}>
+							<h3>{post.data.title}</h3>
+							<p>{post.data.description}</p>
+						</a>
+					</div>
+				))}
 			</div>
 		</main>
 		<Footer />

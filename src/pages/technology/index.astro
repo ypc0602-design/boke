@@ -1,0 +1,197 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+
+const title = '技术栈';
+const description = '我的技术栈与学习笔记';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			.gradient-text {
+				background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+				font-size: 3rem;
+				font-weight: bold;
+			}
+			.page {
+				max-width: 1100px;
+				margin: 0 auto;
+				padding: 3rem 2rem 5rem;
+			}
+			.hero {
+				background: linear-gradient(135deg, #0f172a, #1d4ed8);
+				color: white;
+				border-radius: 20px;
+				padding: 3rem 2rem;
+				box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+				margin-bottom: 2rem;
+			}
+			.eyebrow {
+				margin: 0 0 0.5rem;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				font-size: 0.72rem;
+				opacity: 0.8;
+			}
+			.hero h1 {
+				margin: 0 0 0.75rem;
+				font-size: clamp(2rem, 4vw, 3.5rem);
+				line-height: 1.2;
+			}
+			.subtitle {
+				margin: 0;
+				max-width: 680px;
+				font-size: 1.08rem;
+				color: rgba(255, 255, 255, 0.88);
+			}
+			.quick-nav {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				margin-bottom: 2rem;
+			}
+			.quick-nav a {
+				background: #ffffff;
+				border: 1px solid #e5e7eb;
+				border-radius: 999px;
+				padding: 0.4rem 1rem;
+				color: #2563eb;
+				font-weight: 600;
+				text-decoration: none;
+			}
+			.info-section {
+				background: rgba(255, 255, 255, 0.9);
+				border: 1px solid #e5e7eb;
+				border-radius: 18px;
+				padding: 1.5rem 1.5rem 1.2rem;
+				margin-top: 1.5rem;
+				box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+				scroll-margin-top: 90px;
+			}
+			.info-section h2 {
+				margin-top: 0;
+				margin-bottom: 0.75rem;
+				font-size: 1.5rem;
+			}
+			.info-section h3 {
+				margin: 1.2rem 0 0.5rem;
+			}
+			.info-section p {
+				margin: 0 0 0.75rem;
+				color: #4b5563;
+			}
+			.info-section ul {
+				margin: 0.5rem 0 0;
+				padding-left: 1.2rem;
+				color: #6b7280;
+			}
+			pre {
+				margin: 0;
+				background: #0f172a;
+				color: #e2e8f0;
+				padding: 1rem 1.25rem;
+				border-radius: 12px;
+				overflow-x: auto;
+				font-size: 0.95rem;
+			}
+			@media (max-width: 768px) {
+				.hero {
+					padding: 2rem 1.25rem;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main class="page">
+			<section class="hero">
+				<p class="eyebrow">Technology</p>
+				<h1 class="gradient-text">技术栈</h1>
+				<p class="subtitle">
+					这里记录我在运维与开发中用到的主要技术，点击下方标签或首页技术栈可快速定位。
+				</p>
+			</section>
+
+			<nav class="quick-nav">
+				<a href="#linux">Linux 运维</a>
+				<a href="#prometheus">Prometheus+Grafana</a>
+				<a href="#python">Python</a>
+				<a href="#ai">AI 工具/大模型</a>
+				<a href="#security">网络安全</a>
+			</nav>
+
+			<section class="info-section" id="linux">
+				<h2>Linux 运维</h2>
+				<p>Linux 以内核为核心，结合 shell、文件系统和用户权限机制，构成稳定可靠的计算环境。</p>
+				<h3>基础概念</h3>
+				<ul>
+					<li>文件系统结构</li>
+					<li>权限管理</li>
+					<li>进程与服务</li>
+					<li>包管理器</li>
+				</ul>
+				<h3>安装与环境</h3>
+				<p>可以选择 Ubuntu、Debian、CentOS、Arch 等发行版，根据实际需求配置开发环境或服务器环境。</p>
+				<h3>常用命令</h3>
+				<pre><code>ls -la
+cd /var/www
+pwd
+sudo apt update
+sudo apt install nginx</code></pre>
+				<h3>服务管理</h3>
+				<p>Linux 常见的服务管理包括 systemctl、service、journalctl 等命令，能够灵活查看和控制系统服务状态。</p>
+				<h3>网络配置</h3>
+				<p>网络配置通常涉及 IP 地址、网关、DNS、端口开放和防火墙策略，适合弹性部署与安全加固场景。</p>
+			</section>
+
+			<section class="info-section" id="prometheus">
+				<h2>Prometheus+Grafana</h2>
+				<p>Prometheus 负责采集和存储指标，Grafana 负责可视化与告警展示，是运维监控告警体系的核心组合。</p>
+				<ul>
+					<li>指标采集与存储</li>
+					<li>Grafana 仪表盘</li>
+					<li>告警规则与通知</li>
+				</ul>
+			</section>
+
+			<section class="info-section" id="python">
+				<h2>Python</h2>
+				<p>Python 语法简洁、生态丰富，常用于自动化脚本、数据处理与运维工具开发。</p>
+				<ul>
+					<li>自动化脚本</li>
+					<li>数据处理</li>
+					<li>运维工具开发</li>
+				</ul>
+			</section>
+
+			<section class="info-section" id="ai">
+				<h2>AI 工具/大模型</h2>
+				<p>熟悉 ollama、claude code、coze 等 AI 工具，用于本地部署大模型、辅助开发与提升效率。</p>
+				<ul>
+					<li>ollama 本地大模型</li>
+					<li>claude code 辅助开发</li>
+					<li>coze 智能体</li>
+				</ul>
+			</section>
+
+			<section class="info-section" id="security">
+				<h2>网络安全 (OWASP)</h2>
+				<p>了解 OWASP Top 10 常见 Web 安全风险，关注安全加固与漏洞防护。</p>
+				<ul>
+					<li>OWASP Top 10</li>
+					<li>安全加固</li>
+					<li>漏洞防护</li>
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
