@@ -15,6 +15,27 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
+			 #back-to-top {
+			      position: fixed;
+			      right: 24px;
+			      bottom: 24px;
+			      width: 64px;
+			      height: 64px;
+			      border: none;
+			      border-radius: 50%;
+			      background: #ffffff;
+			      color: #00000;
+			      font-size: 32px;
+			      cursor: pointer;
+			      box-shadow: var(--box-shadow);
+			      opacity: 0;
+			      visibility: hidden;
+			      transition: opacity 0.25s, visibility 0.25s;
+			  }
+		  #back-to-top.show {
+		      opacity: 1;
+		      visibility: visible;
+		  }
 			main {
 				width: calc(100% - 2em);
 				max-width: 100%;
@@ -80,5 +101,15 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			</article>
 		</main>
 		<Footer />
+		<button id="back-to-top" aria-label="回到顶部" title="回到顶部">↑</button>
+		<script>
+	      const backToTop = document.getElementById('back-to-top');
+	      window.addEventListener('scroll', () => {
+	          backToTop.classList.toggle('show', window.scrollY > 400);
+	      });
+	      backToTop.addEventListener('click', () => {
+	          window.scrollTo({ top: 0, behavior: 'smooth' });
+	      });
+  		</script>
 	</body>
 </html>
