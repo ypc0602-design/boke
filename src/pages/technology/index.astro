@@ -126,6 +126,7 @@ const description = '我的技术栈与学习笔记';
 				<a href="#python">Python</a>
 				<a href="#ai">AI 工具/大模型</a>
 				<a href="#security">网络安全</a>
+				<a href="#docker">docker容器</a>
 			</nav>
 
 			<section class="info-section" id="linux">
@@ -144,8 +145,11 @@ const description = '我的技术栈与学习笔记';
 				<pre><code>ls -la
 cd /var/www
 pwd
+date
 sudo apt update
-sudo apt install nginx</code></pre>
+sudo apt install nginx
+sudo yum install nginx
+systemctl status sshd</code></pre>
 				<h3>服务管理</h3>
 				<p>Linux 常见的服务管理包括 systemctl、service、journalctl 等命令，能够灵活查看和控制系统服务状态。</p>
 				<h3>网络配置</h3>
@@ -179,6 +183,7 @@ sudo apt install nginx</code></pre>
 					<li>ollama 本地大模型</li>
 					<li>claude code 辅助开发</li>
 					<li>coze 智能体</li>
+					<li>dify 智能体</li>
 				</ul>
 			</section>
 
@@ -189,6 +194,15 @@ sudo apt install nginx</code></pre>
 					<li>OWASP Top 10</li>
 					<li>安全加固</li>
 					<li>漏洞防护</li>
+				</ul>
+			</section>
+			<section class="info-section" id="docker">
+				<h2>docker容器</h2>
+				<p>用docker容器进行管理，能够快速拉取服务且不影响本地环境</p>
+				<ul>
+					<li>docker compose</li>
+					<li>docker容器挂载</li>
+					<li>docker仓库推送和拉取</li>
 				</ul>
 			</section>
 		</main>
