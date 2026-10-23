@@ -1,15 +1,50 @@
 ---
+import { SITE_TITLE, path } from '../consts';
 const today = new Date();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} 杨鹏程. All rights reserved.
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="footer-copyright">
+			&copy; {today.getFullYear()} 杨鹏程 · {SITE_TITLE}
+		</div>
+		<div class="footer-links">
+			<a href={path('/')}>首页</a>
+			<a href={path('/about')}>关于</a>
+			<a href="mailto:1305824605@qq.com">联系我</a>
+		</div>
+		<div class="footer-powered">
+			Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+			· 仿 <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="noopener">Fluid</a> 风格
+		</div>
+	</div>
 </footer>
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+	.site-footer {
+		border-top: 1px solid rgb(var(--border));
+		padding: 2.5em 1em 3.5em;
 		text-align: center;
+		color: rgb(var(--text-light));
+		font-size: 0.9em;
+	}
+	.footer-inner {
+		max-width: var(--content-width);
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6em;
+	}
+	.footer-links a {
+		margin: 0 0.6em;
+		color: rgb(var(--text-light));
+	}
+	.footer-links a:hover {
+		color: var(--accent);
+	}
+	.footer-powered a {
+		color: rgb(var(--text-light));
+	}
+	.footer-powered a:hover {
+		color: var(--accent);
 	}
 </style>

@@ -1,70 +1,165 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, path } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<header>
-	<nav>
-		<h2>
-			<a href="/">{SITE_TITLE}</a>
-		</h2>
-		<div class="internal-links">
-			<HeaderLink href="/">首页</HeaderLink>
-			<HeaderLink href="/blog">博客</HeaderLink>
-			<HeaderLink href="/technology">技术</HeaderLink>
-			<HeaderLink href="/about">关于</HeaderLink>
+<header class="navbar">
+	<nav class="navbar-inner">
+		<div class="brand">
+			<a href={path('/')} class="brand-link">{SITE_TITLE}</a>
 		</div>
-		<div class="social-links">
-			<a href="https://github.com/ypc0602-design" target="_blank">
-				<span class="sr-only">我的 GitHub</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32">
-					<path
-						fill="currentColor"
-						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-					></path>
-				</svg>
-			</a>
+		<div class="internal-links">
+			<HeaderLink href={path('/')}>首页</HeaderLink>
+			<HeaderLink href={path('/blog')}>博客</HeaderLink>
+			<HeaderLink href={path('/technology')}>技术</HeaderLink>
+			<HeaderLink href={path('/about')}>关于</HeaderLink>
+		</div>
+		<div class="right-side">
+			<div class="social-links">
+				<a href="https://github.com/ypc0602-design" target="_blank" rel="noopener" aria-label="我的 GitHub">
+					<span class="sr-only">我的 GitHub</span>
+					<svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22">
+						<path
+							fill="currentColor"
+							d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+						></path>
+					</svg>
+				</a>
+			</div>
+			<button id="theme-toggle" type="button" class="theme-toggle" aria-label="切换主题" title="切换深浅色主题">
+				<span class="toggle-icon">☾</span>
+			</button>
 		</div>
 	</nav>
 </header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
+
+<script>
+	const THEME_KEY = 'theme';
+	const root = document.documentElement;
+	const btn = document.getElementById('theme-toggle');
+	const icon = btn?.querySelector('.toggle-icon');
+
+	// 读取存储的主题；无存储时跟随系统
+	function applyTheme(theme) {
+		if (theme === 'dark' || theme === 'light') {
+			root.dataset.theme = theme;
+		} else {
+			root.dataset.theme = 'auto';
+		}
+		if (icon) icon.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
 	}
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
+	let savedTheme = null;
+	try {
+		savedTheme = localStorage.getItem(THEME_KEY);
+	} catch (e) {
+		/* 隐私模式下忽略 */
 	}
-	nav {
+	// 若用户显式存过主题则用之，否则跟随系统暗色
+	if (!savedTheme) {
+		applyTheme('auto');
+	} else {
+		applyTheme(savedTheme);
+	}
+
+	btn?.addEventListener('click', () => {
+		const isDark = root.dataset.theme === 'dark'
+			|| (root.dataset.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+		const next = isDark ? 'light' : 'dark';
+		applyTheme(next);
+		try {
+			localStorage.setItem(THEME_KEY, next);
+		} catch (e) {
+			/* ignore */
+		}
+	});
+</script>
+
+<style>
+	.navbar {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: var(--bg-card);
+		border-bottom: 1px solid rgb(var(--border));
+		transition: background-color 0.3s ease;
+	}
+	.navbar-inner {
+		max-width: var(--content-width);
+		margin: 0 auto;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		gap: 1em;
+		padding: 0 1em;
+		height: var(--header-height);
 	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+	.brand-link {
+		font-size: 1.15em;
+		font-weight: 700;
+		color: rgb(var(--text));
+		text-decoration: none;
+		white-space: nowrap;
+	}
+	.brand-link:hover {
+		color: var(--accent);
 		text-decoration: none;
 	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
+	.internal-links {
+		display: flex;
+		gap: 0.2em;
+		flex: 1;
+	}
+	.internal-links a {
+		padding: 0.35em 0.7em;
+		font-size: 0.95em;
+	}
+	.right-side {
+		display: flex;
+		align-items: center;
+		gap: 0.8em;
 	}
 	.social-links,
 	.social-links a {
 		display: flex;
+		align-items: center;
 	}
-	@media (max-width: 720px) {
-		.social-links {
+	.social-links a {
+		color: rgb(var(--text-light));
+		transition: color 0.2s ease;
+	}
+	.social-links a:hover {
+		color: var(--accent);
+	}
+	.theme-toggle {
+		background: var(--bg-code);
+		border: 1px solid rgb(var(--border));
+		color: rgb(var(--text));
+		width: 34px;
+		height: 34px;
+		border-radius: 8px;
+		cursor: pointer;
+		font-size: 1.05em;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 1;
+		transition: all 0.2s ease;
+	}
+	.theme-toggle:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	@media (max-width: 560px) {
+		.social-links,
+		.navbar-inner .brand {
 			display: none;
+		}
+		.internal-links {
+			justify-content: center;
+		}
+		.internal-links a {
+			padding: 0.35em 0.5em;
 		}
 	}
 </style>

@@ -30,7 +30,7 @@ const description = '我的技术栈与学习笔记';
 				color: white;
 				border-radius: 20px;
 				padding: 3rem 2rem;
-				box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+				box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2);
 				margin-bottom: 2rem;
 			}
 			.eyebrow {
@@ -58,21 +58,26 @@ const description = '我的技术栈与学习笔记';
 				margin-bottom: 2rem;
 			}
 			.quick-nav a {
-				background: #ffffff;
-				border: 1px solid #e5e7eb;
+				background: var(--bg-card);
+				border: 1px solid rgb(var(--border));
 				border-radius: 999px;
 				padding: 0.4rem 1rem;
-				color: #2563eb;
+				color: var(--accent);
 				font-weight: 600;
 				text-decoration: none;
+				transition: all 0.2s ease;
+			}
+			.quick-nav a:hover {
+				border-color: var(--accent);
+				background: var(--accent-light);
 			}
 			.info-section {
-				background: rgba(255, 255, 255, 0.9);
-				border: 1px solid #e5e7eb;
-				border-radius: 18px;
+				background: var(--bg-card);
+				border: 1px solid rgb(var(--border));
+				border-radius: var(--radius);
 				padding: 1.5rem 1.5rem 1.2rem;
 				margin-top: 1.5rem;
-				box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+				box-shadow: var(--box-shadow);
 				scroll-margin-top: 90px;
 			}
 			.info-section h2 {
@@ -85,12 +90,12 @@ const description = '我的技术栈与学习笔记';
 			}
 			.info-section p {
 				margin: 0 0 0.75rem;
-				color: #4b5563;
+				color: rgb(var(--text-light));
 			}
 			.info-section ul {
 				margin: 0.5rem 0 0;
 				padding-left: 1.2rem;
-				color: #6b7280;
+				color: rgb(var(--text-light));
 			}
 			pre {
 				margin: 0;

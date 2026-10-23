@@ -4,9 +4,14 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 
+// 部署在 GitHub Pages 项目页面：https://ypc0602-design.github.io/boke/
+// 本地开发（npm run dev）时 base 不影响访问。
+const base = '/boke/';
+
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://ypc0602-design.github.io',
+	base,
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{

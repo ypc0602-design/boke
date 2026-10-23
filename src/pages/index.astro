@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { path, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -16,134 +17,30 @@ const posts = (await getCollection('blog'))
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<style>
-			/* 渐变标题 */
-			.gradient-text {
-				background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-				-webkit-background-clip: text;
-				background-clip: text;
-				color: transparent;
-				font-size: 3rem;
-				font-weight: bold;
-			}
-
-			/* 正文统一样式 */
-			main {
-				max-width: 720px;
-				margin: 0 auto;
-				padding: 2rem 1.5rem 4rem;
-				color: #1a1a1a;
-				line-height: 1.8;
-			}
-
-			main p {
-				margin-bottom: 1rem;
-				font-size: 1.05rem;
-			}
-
-			/* 分区标题 */
-			.section-title {
-				font-size: 1.5rem;
-				font-weight: 600;
-				margin-top: 2.5rem;
-				margin-bottom: 1rem;
-				color: #222;
-			}
-
-			/* 卡片容器 */
-			.card-list {
-				display: grid;
-				gap: 1rem;
-			}
-
-			.card {
-				border: 1px solid #e5e5e5;
-				border-radius: 8px;
-				padding: 1rem 1.2rem;
-				transition: box-shadow 0.2s;
-			}
-
-			.card:hover {
-				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-			}
-
-			.card h3 {
-				font-size: 1.1rem;
-				margin: 0 0 0.3rem;
-			}
-
-			.card p {
-				font-size: 0.95rem;
-				color: #555;
-				margin: 0;
-			}
-
-			/* 技术栈标签 */
-			.tech-tags {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.5rem;
-			}
-
-			.tech-tag {
-				background: #f3f3f3;
-				border-radius: 4px;
-				padding: 0.3rem 0.8rem;
-				font-size: 0.9rem;
-				color: #333;
-				cursor: pointer;
-			}
-
-			.tech-tag:hover {
-				background: #e0e0e0;
-			}
-
-			.tech-tags a {
-				text-decoration: none;
-			}
-
-			.tech-tags a:hover {
-				text-decoration: none;
-			}
-
-			/* 邮箱链接 */
-			a {
-				color: #4ecdc4;
-				text-decoration: none;
-			}
-
-			a:hover {
-				text-decoration: underline;
-			}
-
-			/* 欢迎语区域 */
-			.hero {
-				margin-bottom: 2rem;
-			}
-
-			.hero p {
-				color: #444;
-			}
-		</style>
-
 		<Header />
 		<main>
 			<!-- 欢迎区 -->
-			<div class="hero">
+			<section class="hero">
 				<h1 class="gradient-text">你好，我是 v</h1>
 				<p>欢迎来到我的个人博客。这里记录我的学习笔记、技术思考与日常折腾。</p>
-				<p>联系邮箱：<a href="mailto:1305824605@qq.com">1305824605@qq.com</a></p>
-			</div>
+				<p>
+					联系邮箱：<a href="mailto:1305824605@qq.com">1305824605@qq.com</a>
+				</p>
+			</section>
 
 			<!-- 技术栈 -->
 			<h2 class="section-title">技术栈</h2>
 			<div class="tech-tags">
-				<a href="/technology/#linux"><span class="tech-tag">Linux 运维</span></a>
-				<a href="/technology/#prometheus"><span class="tech-tag">Prometheus+Grafana</span></a>
-				<a href="/technology/#python"><span class="tech-tag">Python</span></a>
-				<a href="/technology/#ai"><span class="tech-tag">AI 工具/大模型</span></a>
-				<a href="/technology/#security"><span class="tech-tag">网络安全 (OWASP)</span></a>
-				<a href="/technology/#docker"><span class="tech-tag">docker容器</span></a>
+				<a href={path('/technology/#linux')}><span class="tech-tag">Linux 运维</span></a>
+				<a href={path('/technology/#prometheus')}
+					><span class="tech-tag">Prometheus+Grafana</span></a
+				>
+				<a href={path('/technology/#python')}><span class="tech-tag">Python</span></a>
+				<a href={path('/technology/#ai')}><span class="tech-tag">AI 工具/大模型</span></a>
+				<a href={path('/technology/#security')}
+					><span class="tech-tag">网络安全 (OWASP)</span></a
+				>
+				<a href={path('/technology/#docker')}><span class="tech-tag">docker容器</span></a>
 			</div>
 
 			<!-- 项目 / 作品 -->
@@ -156,14 +53,20 @@ const posts = (await getCollection('blog'))
 			</div>
 
 			<!-- 最新文章 -->
-			<h2 class="section-title">最新文章</h2>
+			<div class="section-head">
+				<h2 class="section-title">最新文章</h2>
+				<a class="view-all" href={path('/blog/')}>查看全部 →</a>
+			</div>
 			<div class="card-list">
 				{posts.map((post) => (
-					<div class="card">
-						<a href={`/blog/${post.id}/`}>
+					<div class="card post-card">
+						<div class="post-meta">
+							<FormattedDate date={post.data.pubDate} />
+						</div>
+						<a href={path(`/blog/${post.id}/`)}>
 							<h3>{post.data.title}</h3>
-							<p>{post.data.description}</p>
 						</a>
+						<p>{post.data.description}</p>
 					</div>
 				))}
 			</div>
@@ -171,3 +74,120 @@ const posts = (await getCollection('blog'))
 		<Footer />
 	</body>
 </html>
+
+<style>
+	/* 渐变标题 */
+	.gradient-text {
+		background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		font-size: 2.8rem;
+		font-weight: bold;
+		margin: 0 0 0.3em;
+	}
+
+	/* 欢迎区 */
+	.hero {
+		margin: 1rem 0 2.5rem;
+		padding: 2.2em 2em;
+		background: var(--bg-card);
+		border: 1px solid rgb(var(--border));
+		border-radius: calc(var(--radius) + 4px);
+		box-shadow: var(--box-shadow);
+		text-align: center;
+	}
+	.hero p {
+		color: rgb(var(--text-light));
+		max-width: 46em;
+		margin: 0 auto 0.6em;
+	}
+
+	/* 分区标题 */
+	.section-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+	}
+	.section-title {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin-top: 2.6rem;
+		margin-bottom: 1rem;
+		padding-bottom: 0.3em;
+		border-bottom: none;
+	}
+	.view-all {
+		font-size: 0.9em;
+		color: rgb(var(--text-light));
+		white-space: nowrap;
+	}
+
+	/* 技术栈标签 */
+	.tech-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		margin-top: -0.4rem;
+	}
+	.tech-tags a {
+		text-decoration: none;
+	}
+	.tech-tag {
+		background: var(--bg-card);
+		border: 1px solid rgb(var(--border));
+		border-radius: 999px;
+		padding: 0.35em 1em;
+		font-size: 0.9em;
+		color: rgb(var(--text));
+		display: inline-block;
+		transition: all 0.2s ease;
+	}
+	.tech-tag:hover {
+		background: var(--accent-light);
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	/* 卡片容器 */
+	.card-list {
+		display: grid;
+		gap: 1rem;
+	}
+	.card {
+		background: var(--bg-card);
+		border: 1px solid rgb(var(--border));
+		border-radius: var(--radius);
+		padding: 1.2rem 1.4rem;
+		box-shadow: var(--box-shadow);
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+	}
+	.card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
+		border-color: var(--accent);
+	}
+	.card h3 {
+		font-size: 1.12rem;
+		margin: 0 0 0.3rem;
+	}
+	.card p {
+		font-size: 0.94rem;
+		color: rgb(var(--text-light));
+		margin: 0;
+	}
+	.card a {
+		text-decoration: none;
+	}
+	.card a:hover {
+		text-decoration: none;
+	}
+	.card a:hover h3 {
+		color: var(--accent);
+	}
+	.post-card .post-meta {
+		color: rgb(var(--text-light));
+		font-size: 0.82em;
+		margin-bottom: 0.3em;
+	}
+</style>
